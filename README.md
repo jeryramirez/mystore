@@ -16,7 +16,7 @@ Getting Started
 
 Clone the repository:
 
-    git clone git@github.com:jeryramirez/mystoreapp.git
+    git clone git@github.com:jeryramirez/mystore.git
 
 Navigate to project folder
     
