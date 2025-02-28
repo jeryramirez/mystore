@@ -1,3 +1,4 @@
+
 ## Getting Started
 
     MyStore (iOS)
@@ -41,3 +42,8 @@ To debug your application, use:
     Start debugging in VS Code: Press F5 or run:
 
     flutter run --debug
+
+    
+Download an APK for Android
+
+    https://drive.google.com/file/d/1GHzIMoUY7jTE7fKUfR0LkXBYdBjx0p-Z/view?usp=sharing
