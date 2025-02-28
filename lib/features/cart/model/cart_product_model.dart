@@ -18,15 +18,6 @@ class CartProductModel {
   
   double get totalPrice => (price * quantity);
 
-  // factory CartProductModel.fromProduct(ProductModel product){
-    // return CardProductModel(
-    //   id: product.id,
-    //   imageUrl: product.imageUrl,
-    //   price: product.price
-
-    // )
-  // }
-
 CartProductModel copyWith({
     String? id,
     String? title,
