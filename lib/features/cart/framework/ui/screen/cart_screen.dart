@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
-import 'package:my_store/features/cart/framework/ui/widget/cart_product_card.dart';
+
+import '../../../../product/framework/ui/widget/product_cart.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -84,8 +85,8 @@ class _CartScreenState extends State<CartScreen> {
             child: ListView.builder(
               itemCount: cartProducts.length,
               itemBuilder: (_, index) {
-                return CartProductCard(
-                  cartProducts: cartProducts[index]
+                return ProductCard(
+                  product: cartProducts[index]
               );}
             ),
           ),

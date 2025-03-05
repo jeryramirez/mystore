@@ -1,10 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
-import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
 import 'package:my_store/features/product/core/entities/product.dart';
-import 'package:my_store/features/product/framework/model/product_model.dart';
+import 'package:my_store/features/product/framework/bloc/product_cart.dart';
+import 'package:my_store/features/product/framework/ui/widget/card_rating.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -12,7 +10,7 @@ class ProductCard extends StatelessWidget {
     super.key
   });
 
-  final ProductModel product;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +54,7 @@ class ProductCard extends StatelessWidget {
                     
                       children:[
                         CardTitle(title: product.title,),
-                        CardRated(rate: product.rating),
+                        CardRating(rate: product.rating),
                         CardPrice(price: product.price),
                         CartButton(product: product)
                       ]
@@ -66,211 +64,6 @@ class ProductCard extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class CardTitle extends StatelessWidget {
-  const CardTitle({
-
-    required this.title,
-    super.key
-  });
-
-
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 150,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              title,
-              overflow: TextOverflow.visible,
-              softWrap: true,
-              style: TextStyle(
-                fontWeight: FontWeight.bold
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class CardRated extends StatelessWidget {
-  const CardRated({
-    required this.rate,
-    super.key
-  });
-
-  final double rate;
-
-  @override
-  Widget build(BuildContext context) {
-    
-    return Row(
-      children: 
-        List.generate(rate.floor(), (index) {
-          return const Icon(Icons.star, color: Color.from(alpha: 1, red: 0.98, green: 0.776, blue: 0.043),);
-        })
-    );
-  }
-}
-
-class CardPrice extends StatelessWidget {
-  const CardPrice({
-    required this.price,
-    super.key
-  });
-
-  final double price;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text("$price", style: TextStyle(
-          fontSize: 18
-        ),)
-      ],
-    );
-  }
-}
-
-class CartButton extends StatelessWidget {
-  const CartButton({
-    required this.product,
-    super.key
-    });
-
-
-  final ProductModel product;
-  @override
-  Widget build(BuildContext context) {
-
-    final cartProducts = context.watch<CartProductBloc>().state.cartProducts;
-
-    Product cartProduct = cartProducts.firstWhere( (element) => element.id == product.id, orElse: (){
-          return Product(
-            id: product.id, 
-            title: product.title, 
-            rating: product.rating, 
-            price: product.price, 
-            imageUrl: product.imageUrl, 
-            quantity: 0
-          );
-        });
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-      child: SizedBox(
-        height: 36,
-        child: Row(
-          children: [
-            cartProduct.quantity > 0 
-            ? Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 6,
-                    child: ElevatedButton.icon(
-                      onPressed: (){
-                        cartProduct = cartProduct.copyWith(quantity: 0);
-                        context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-                      },
-                      icon: Icon(Icons.shopping_cart, color: const Color.fromARGB(255, 255, 255, 255),), 
-                      label: Text(
-                        "Remove", 
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 250, 11, 11),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.horizontal(left: Radius.circular(8))
-                        ),
-                      )
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Row(
-                      children: [
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Flexible(
-                      child: IconButton(
-                        onPressed: (){
-                          cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity - 1);
-                          context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-                        },
-                        
-                        icon: Icon(Icons.remove, color: Colors.black, size: 16,),
-                        
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 230, 230, 230),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero
-                          ),
-                        )
-                      ),
-                    ),
-                    SizedBox(width: 28, child: Center(child: Text("${cartProduct.quantity}"))),
-                    Flexible(
-                      child: IconButton(
-                        onPressed: (){
-                          cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity + 1);
-                          context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-                        },
-                        
-                        icon: Icon(Icons.add, color: Colors.black, size: 16,),
-                        
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 230, 230, 230),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.horizontal(right: Radius.circular(8))
-                          ),
-                        )
-                      ),
-                    ),
-                                  
-                      ],
-                    ),
-                  )
-                  
-              
-                ],
-              ),
-            ) : ElevatedButton.icon(
-    
-              onPressed: (){
-                cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity + 1);
-                context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-              },
-              
-              icon: Icon(Icons.shopping_cart, color: Colors.black,), 
-              label: Text("Add to cart", style: TextStyle(
-                color: Colors.black,
-                
-              ),),
-              
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.from(alpha: 1, red: 0.98, green: 0.776, blue: 0.043),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              )
-            ) 
-          ],
         ),
       ),
     );
