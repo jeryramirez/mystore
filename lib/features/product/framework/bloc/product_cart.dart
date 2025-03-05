@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_event.dart';
-import 'package:my_store/features/cart/model/cart_product_model.dart';
-import 'package:my_store/features/product/model/product_model.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
+import 'package:my_store/features/product/core/entities/product.dart';
+import 'package:my_store/features/product/framework/model/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -157,8 +157,8 @@ class CartButton extends StatelessWidget {
 
     final cartProducts = context.watch<CartProductBloc>().state.cartProducts;
 
-    CartProductModel cartProduct = cartProducts.firstWhere( (element) => element.id == product.id, orElse: (){
-          return CartProductModel(
+    Product cartProduct = cartProducts.firstWhere( (element) => element.id == product.id, orElse: (){
+          return Product(
             id: product.id, 
             title: product.title, 
             rating: product.rating, 

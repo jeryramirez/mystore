@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_event.dart';
-import 'package:my_store/features/cart/model/cart_product_model.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
+import 'package:my_store/features/product/core/entities/product.dart';
 
 class CartProductCard extends StatelessWidget {
   const CartProductCard({
@@ -11,7 +11,7 @@ class CartProductCard extends StatelessWidget {
     super.key
   });
 
-  final CartProductModel cartProducts;
+  final Product cartProducts;
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +155,7 @@ class CartButton extends StatelessWidget {
     });
 
 
-  final CartProductModel cartProduct;
+  final Product cartProduct;
   @override
   Widget build(BuildContext context) {
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_bloc.dart';
-import 'package:my_store/features/cart/screen/cart_screen.dart';
-import 'package:my_store/features/cart/screen/purchase_screen.dart';
-import 'package:my_store/features/product/screen/product_screen.dart';
-import 'package:my_store/features/product/bloc/product_bloc.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
+import 'package:my_store/features/cart/framework/ui/screen/cart_screen.dart';
+import 'package:my_store/features/cart/framework/ui/screen/purchase_screen.dart';
+import 'package:my_store/features/product/framework/ui/screen/product_screen.dart';
+import 'package:my_store/features/product/framework/bloc/product_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

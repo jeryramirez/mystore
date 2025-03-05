@@ -1,5 +1,7 @@
 
-class CartProductModel {
+import 'package:equatable/equatable.dart';
+
+class Product extends Equatable {
   final String id;
   final String title;
   final double rating;
@@ -7,7 +9,7 @@ class CartProductModel {
   final String imageUrl;
   final int quantity;
 
-  const CartProductModel({
+  const Product({
     required this.id,
     required this.title, 
     required this.rating, 
@@ -18,7 +20,10 @@ class CartProductModel {
   
   double get totalPrice => (price * quantity);
 
-CartProductModel copyWith({
+  @override
+  List<Object> get props => [id, title, rating, price, imageUrl, quantity];
+
+  Product copyWith({
     String? id,
     String? title,
     double? rating,
@@ -27,7 +32,7 @@ CartProductModel copyWith({
     double? total,
     int? quantity,
   }) {
-    return CartProductModel(
+    return Product(
       id: id ?? this.id,
       title: title ?? this.title,
       rating: rating ?? this.rating,
@@ -36,5 +41,4 @@ CartProductModel copyWith({
       quantity: quantity ?? this.quantity,
     );
   }
-
 }

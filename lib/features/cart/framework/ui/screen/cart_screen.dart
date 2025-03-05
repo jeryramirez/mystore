@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_bloc.dart';
-import 'package:my_store/features/cart/bloc/cart_event.dart';
-import 'package:my_store/features/cart/widget/cart_product_card.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
+import 'package:my_store/features/cart/framework/ui/widget/cart_product_card.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});

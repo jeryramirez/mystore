@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:my_store/features/product/model/product_model.dart';
+import 'package:my_store/features/product/framework/model/product_model.dart';
 
 final class ProductState extends Equatable {
   const ProductState({
