@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
 import 'package:my_store/features/cart/framework/ui/widget/cart_widget.dart';
+import 'package:my_store/features/product/core/entities/product.dart';
 import 'package:my_store/features/product/framework/bloc/product_bloc.dart';
 import 'package:my_store/features/product/framework/ui/widget/product_cart.dart';
 import 'package:my_store/features/product/framework/bloc/product_event.dart';
-import 'package:my_store/features/product/framework/model/product_model.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -16,7 +16,7 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
 
- late Future<List<ProductModel>> futureProducts;
+ late Future<List<Product>> futureProducts;
 
   @override
   void initState() {
