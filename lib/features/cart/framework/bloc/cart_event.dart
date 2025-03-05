@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:my_store/features/cart/model/cart_product_model.dart';
+import 'package:my_store/features/product/core/entities/product.dart';
 
 sealed class CartEvent extends Equatable{
   @override
@@ -8,7 +8,7 @@ sealed class CartEvent extends Equatable{
 
 final class AddProductToCart extends CartEvent {
 
-  final CartProductModel cartProduct;
+  final Product cartProduct;
 
   AddProductToCart({required this.cartProduct});
 
