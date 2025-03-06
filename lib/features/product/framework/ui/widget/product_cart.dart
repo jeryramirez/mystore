@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_store/features/product/core/entities/product.dart';
-import 'package:my_store/features/product/framework/bloc/product_cart.dart';
+import 'package:my_store/features/product/framework/ui/widget/card_button.dart';
+import 'package:my_store/features/product/framework/ui/widget/card_title.dart';
+import 'package:my_store/features/product/framework/ui/widget/card_price.dart';
 import 'package:my_store/features/product/framework/ui/widget/card_rating.dart';
 
 class ProductCard extends StatelessWidget {

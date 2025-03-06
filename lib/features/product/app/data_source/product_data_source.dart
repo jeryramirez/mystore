@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:my_store/features/product/core/repository/product_repository.dart';
-import 'package:my_store/features/product/framework/model/product_model.dart';
+import 'package:my_store/features/product/app/model/product_model.dart';
 
 abstract class ProductDataSource {
   Future<List<ProductModel>> getProducts();

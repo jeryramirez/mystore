@@ -6,11 +6,11 @@ sealed class CartEvent extends Equatable{
   List<Object?> get props => [];
 }
 
-final class AddProductToCart extends CartEvent {
+final class AddOrRemoveProductToCart extends CartEvent {
 
   final Product cartProduct;
 
-  AddProductToCart({required this.cartProduct});
+  AddOrRemoveProductToCart({required this.cartProduct});
 
   @override
   List<Object?> get props => [cartProduct];
