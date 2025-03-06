@@ -1,22 +1,29 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_store/features/product/app/use_cases/get_products.dart';
+
 import 'package:my_store/features/product/framework/bloc/product_event.dart';
 import 'package:my_store/features/product/framework/bloc/product_state.dart';
-import 'package:my_store/http.dart';
 
 
 
-class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  ProductBloc() : super(const ProductState()) {
-    on<GetProducts>(getProducts);
-  }
+class ProductBloc extends Bloc<GetProductsEvent, ProductState> {
 
-  Future<void> getProducts(
-      GetProducts event,
+  final GetProducts getProducts;
+
+  ProductBloc({
+    required GetProducts getProductsUseCase
+  }) :  getProducts = getProductsUseCase, 
+        super(const ProductState()) {
+          on<GetProductsEvent>(getProductsEvent);
+        }
+
+  Future<void> getProductsEvent(
+      GetProductsEvent event,
       Emitter<ProductState> emit,
     ) async {
       emit(state.copyWith(productsLoading: true));
       
-      final futureProducts = await fetchProducts();
+      final futureProducts = await getProducts.getProducts();
 
       emit(
         state.copyWith(

@@ -4,8 +4,8 @@ import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
 import 'package:my_store/features/cart/framework/ui/widget/cart_widget.dart';
 import 'package:my_store/features/product/core/entities/product.dart';
 import 'package:my_store/features/product/framework/bloc/product_bloc.dart';
-import 'package:my_store/features/product/framework/ui/widget/product_cart.dart';
 import 'package:my_store/features/product/framework/bloc/product_event.dart';
+import 'package:my_store/features/product/framework/ui/widget/product_cart.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -22,7 +22,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     super.initState();
 
-    context.read<ProductBloc>().add(GetProducts());
+    context.read<ProductBloc>().add(GetProductsEvent());
 
   }
   @override
