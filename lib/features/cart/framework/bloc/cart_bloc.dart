@@ -5,7 +5,7 @@ import 'package:my_store/features/cart/framework/bloc/cart_state.dart';
 
 class CartProductBloc extends Bloc<CartEvent, CartState> {
   CartProductBloc() : super(const CartState()) {
-    on<AddProductToCart>(addProductToCart);
+    on<AddOrRemoveProductToCart>(addOrRemoveProductToCart);
     on<PurchaseCart>(purchaseCart);
   }
 
@@ -20,8 +20,8 @@ class CartProductBloc extends Bloc<CartEvent, CartState> {
     );
   } 
 
-  Future<void> addProductToCart(
-      AddProductToCart event,
+  Future<void> addOrRemoveProductToCart(
+      AddOrRemoveProductToCart event,
       Emitter<CartState> emit,
     ) async {
       emit(state.copyWith(cartProductsLoading: true));

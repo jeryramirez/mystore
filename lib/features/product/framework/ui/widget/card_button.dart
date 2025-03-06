@@ -19,15 +19,15 @@ class CartButton extends StatelessWidget {
     final cartProducts = context.watch<CartProductBloc>().state.cartProducts;
 
     Product cartProduct = cartProducts.firstWhere( (element) => element.id == product.id, orElse: (){
-          return Product(
-            id: product.id, 
-            title: product.title, 
-            rating: product.rating, 
-            price: product.price, 
-            imageUrl: product.imageUrl, 
-            quantity: 0
-          );
-        });
+      return Product(
+        id: product.id, 
+        title: product.title, 
+        rating: product.rating, 
+        price: product.price, 
+        imageUrl: product.imageUrl, 
+        quantity: 0
+      );
+    });
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: SizedBox(
@@ -41,10 +41,7 @@ class CartButton extends StatelessWidget {
                   Expanded(
                     flex: 6,
                     child: ElevatedButton.icon(
-                      onPressed: (){
-                        cartProduct = cartProduct.copyWith(quantity: 0);
-                        context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-                      },
+                      onPressed: () => removeProductToCart(context, cartProduct),
                       icon: Icon(Icons.shopping_cart, color: const Color.fromARGB(255, 255, 255, 255),), 
                       label: Text(
                         "Remove", 
@@ -70,10 +67,7 @@ class CartButton extends StatelessWidget {
                     ),
                     Flexible(
                       child: IconButton(
-                        onPressed: (){
-                          cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity - 1);
-                          context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-                        },
+                        onPressed: () => substractProductToCart(context, cartProduct),
                         
                         icon: Icon(Icons.remove, color: Colors.black, size: 16,),
                         
@@ -88,10 +82,7 @@ class CartButton extends StatelessWidget {
                     SizedBox(width: 28, child: Center(child: Text("${cartProduct.quantity}"))),
                     Flexible(
                       child: IconButton(
-                        onPressed: (){
-                          cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity + 1);
-                          context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-                        },
+                        onPressed: () => addProductToCart(context, cartProduct),
                         
                         icon: Icon(Icons.add, color: Colors.black, size: 16,),
                         
@@ -107,16 +98,11 @@ class CartButton extends StatelessWidget {
                       ],
                     ),
                   )
-                  
-              
                 ],
               ),
             ) : ElevatedButton.icon(
     
-              onPressed: (){
-                cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity + 1);
-                context.read<CartProductBloc>().add(AddProductToCart(cartProduct: cartProduct));
-              },
+              onPressed: () => addProductToCart(context, cartProduct),
               
               icon: Icon(Icons.shopping_cart, color: Colors.black,), 
               label: Text("Add to cart", style: TextStyle(
@@ -135,5 +121,20 @@ class CartButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void addProductToCart(BuildContext context, Product cartProduct) {
+    cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity + 1);
+    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: cartProduct));
+  }
+
+  void substractProductToCart(BuildContext context, Product cartProduct) {
+    cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity - 1);
+    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: cartProduct));
+  }
+
+  void removeProductToCart(BuildContext context, Product cartProduct) {
+    cartProduct = cartProduct.copyWith(quantity: 0);
+    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: cartProduct));
   }
 }
