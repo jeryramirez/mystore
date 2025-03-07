@@ -46,4 +46,4 @@ To debug your application, use:
     
 Download an APK for Android
 
-    https://drive.google.com/file/d/1GHzIMoUY7jTE7fKUfR0LkXBYdBjx0p-Z/view?usp=sharing
+    https://drive.google.com/file/d/1GHzIMoUY7jTE7fKUfR0LkXBYdBjx0p-Z/view?usp=sharing](https://drive.google.com/file/d/1nKigvLgRsZB57Wj19CO9PXWgoH26Z2BG/view?usp=drive_link
