@@ -57,7 +57,7 @@ class CartProductBloc extends Bloc<CartEvent, CartState> {
         if(event.cartProduct.quantity > 0){
 
           productsCopy[index] = event.cartProduct;
-          await _cartRepository.addProductToCart(event.cartProduct);
+          _cartRepository.addProductToCart(event.cartProduct);
           emit(
             state.copyWith( 
               cartProducts: productsCopy,
@@ -65,19 +65,18 @@ class CartProductBloc extends Bloc<CartEvent, CartState> {
             ),
           );
         } else{
-          await _cartRepository.deleteProductToCart(event.cartProduct.id);
+          _cartRepository.deleteProductToCart(event.cartProduct.id);
           productsCopy.removeAt(index);
         }
 
       } else{
 
-        await _cartRepository.addProductToCart(event.cartProduct);
+        _cartRepository.addProductToCart(event.cartProduct);
         emit(
           state.copyWith(
             cartProducts: [...state.cartProducts, event.cartProduct],
           )
         );
-
       }
   }
 }
