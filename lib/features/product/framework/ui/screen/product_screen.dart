@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
+import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
 import 'package:my_store/features/cart/framework/ui/widget/cart_widget.dart';
-import 'package:my_store/features/product/core/entities/product.dart';
+import 'package:my_store/features/product/app/model/product_model.dart';
 import 'package:my_store/features/product/framework/bloc/product_bloc.dart';
 import 'package:my_store/features/product/framework/bloc/product_event.dart';
 import 'package:my_store/features/product/framework/ui/widget/product_cart.dart';
@@ -16,13 +17,14 @@ class ProductsScreen extends StatefulWidget {
 
 class _ProductsScreenState extends State<ProductsScreen> {
 
- late Future<List<Product>> futureProducts;
+ late Future<List<ProductModel>> futureProducts;
 
   @override
   void initState() {
     super.initState();
 
     context.read<ProductBloc>().add(GetProductsEvent());
+    context.read<CartProductBloc>().add(GetProductsCart());
 
   }
   @override
@@ -31,7 +33,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final products = context.watch<ProductBloc>().state.products;
     final cartProducts = context.watch<CartProductBloc>().state.cartProducts;
 
-    final totalProducts = cartProducts.isNotEmpty ? cartProducts.map((element) => element.quantity).reduce((value, element) => value + element) : 0;
+    final totalProducts = cartProducts.map( (product) => product.quantity).fold(0, ((value, element) => value + element));
+
+    // final totalProducts = cartProducts.isNotEmpty ? cartProducts.map((element) => element.quantity).reduce((value, element) => value + element) : 0;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

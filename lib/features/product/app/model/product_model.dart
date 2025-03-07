@@ -1,15 +1,42 @@
-import 'package:my_store/features/product/core/entities/product.dart';
 
-class ProductModel extends Product {
+class ProductModel {
+    final String id;
+    final String title;
+    final double rating;
+    final double price;
+    final String imageUrl;
+    final double total;
+    final int quantity;
 
   const ProductModel({
-    required super.id,
-    required super.title, 
-    required super.rating, 
-    required super.price,
-    required super.imageUrl,
-    required super.quantity,
+    required this.id,
+    required this.title, 
+    required this.rating, 
+    required this.price,
+    required this.imageUrl,
+    required this.total,
+    required this.quantity,
   });
+
+  ProductModel copyWith({
+    String? id,
+    String? title,
+    double? rating,
+    double? price,
+    String? imageUrl,
+    double? total,
+    int? quantity,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      rating: rating ?? this.rating,
+      price: price ?? this.price,
+      imageUrl: imageUrl ?? this.imageUrl,
+      total: total ?? this.total,
+      quantity: quantity ?? this.quantity,
+    );
+  }
  
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
@@ -18,7 +45,21 @@ class ProductModel extends Product {
         rating: json["rating"],
         price: json["price"],
         imageUrl: json["thumbnail"],
-        quantity: 0
+        total: json["total"] ?? 0,
+        quantity: json["quantity"] ?? 0 
       );
     }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "meta": {
+        "barcode": id,
+      },
+      "title": title,
+      "rating": rating,
+      "price": price,
+      "thumbnail": imageUrl,
+      "quantity": quantity,
+    };
+  }
 }

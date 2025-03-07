@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_bloc.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
-import 'package:my_store/features/product/core/entities/product.dart';
+import 'package:my_store/features/product/app/model/product_model.dart';
 
 class CartButton extends StatelessWidget {
   const CartButton({
@@ -12,22 +12,26 @@ class CartButton extends StatelessWidget {
     });
 
 
-  final Product product;
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
 
     final cartProducts = context.watch<CartProductBloc>().state.cartProducts;
 
-    Product cartProduct = cartProducts.firstWhere( (element) => element.id == product.id, orElse: (){
-      return Product(
+    ProductModel cartProduct = cartProducts.firstWhere( (element) => element.id == product.id, orElse: (){
+      return ProductModel(
         id: product.id, 
         title: product.title, 
         rating: product.rating, 
         price: product.price, 
         imageUrl: product.imageUrl, 
+        total: 0,
         quantity: 0
       );
     });
+    
+
+    
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: SizedBox(
@@ -123,18 +127,18 @@ class CartButton extends StatelessWidget {
     );
   }
 
-  void addProductToCart(BuildContext context, Product cartProduct) {
+  void addProductToCart(BuildContext context, ProductModel cartProduct) {
     cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity + 1);
-    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: cartProduct));
+    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: (cartProduct)));
   }
 
-  void substractProductToCart(BuildContext context, Product cartProduct) {
+  void substractProductToCart(BuildContext context, ProductModel cartProduct) {
     cartProduct = cartProduct.copyWith(quantity: cartProduct.quantity - 1);
-    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: cartProduct));
+    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: (cartProduct)));
   }
 
-  void removeProductToCart(BuildContext context, Product cartProduct) {
+  void removeProductToCart(BuildContext context, ProductModel cartProduct) {
     cartProduct = cartProduct.copyWith(quantity: 0);
-    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: cartProduct));
+    BlocProvider.of<CartProductBloc>(context).add(AddOrRemoveProductToCart(cartProduct: (cartProduct)));
   }
 }
