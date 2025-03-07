@@ -17,7 +17,7 @@ class _CartScreenState extends State<CartScreen> {
 
     final cartProducts = context.watch<CartProductBloc>().state.cartProducts;
     final totalProductsQuantity = cartProducts.isNotEmpty ? cartProducts.map((element) => element.quantity).reduce((value, element) => value + element) : 0;
-    final totalProducts = cartProducts.isNotEmpty ? cartProducts.map((element) => element.totalPrice).reduce((value, element) => value + element) : 0;
+    final totalProducts = cartProducts.isNotEmpty ? cartProducts.map((element) => element.total).reduce((value, element) => value + element) : 0;
 
 
     return Scaffold(

@@ -1,24 +1,45 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_store/features/cart/core/repository/products_cart_repository.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_event.dart';
 import 'package:my_store/features/cart/framework/bloc/cart_state.dart';
 
 class CartProductBloc extends Bloc<CartEvent, CartState> {
-  CartProductBloc() : super(const CartState()) {
+  CartProductBloc(this._cartRepository) : super(const CartState()) {
+    on<GetProductsCart>(_onGetProductsCart);
     on<AddOrRemoveProductToCart>(addOrRemoveProductToCart);
     on<PurchaseCart>(purchaseCart);
   }
+
+  final ProductsCartRepository _cartRepository;
+
 
   void purchaseCart(
     PurchaseCart event,
     Emitter<CartState> emit,
   ){
+
+    _cartRepository.purchaseCart();
     emit(
       state.copyWith(
         cartProducts: [],
       )
     );
   } 
+
+  Future<void> _onGetProductsCart(GetProductsCart event, Emitter<CartState> emit){
+    return emit.onEach(
+      _cartRepository.streamCartProducts(),
+      onData: (productsCart) {
+        emit(
+          state.copyWith(
+            cartProducts: productsCart,
+          ),
+        );
+      },
+      onError: addError,
+    );
+  }
 
   Future<void> addOrRemoveProductToCart(
       AddOrRemoveProductToCart event,
@@ -32,24 +53,31 @@ class CartProductBloc extends Bloc<CartEvent, CartState> {
       
         final productsCopy = [...state.cartProducts];
         final index = productsCopy.indexWhere((element) => element.id == product.id);
+
         if(event.cartProduct.quantity > 0){
+
           productsCopy[index] = event.cartProduct;
-        }else{
+          await _cartRepository.addProductToCart(event.cartProduct);
+          emit(
+            state.copyWith( 
+              cartProducts: productsCopy,
+              cartProductsLoading: false,
+            ),
+          );
+        } else{
+          await _cartRepository.deleteProductToCart(event.cartProduct.id);
           productsCopy.removeAt(index);
         }
-        
-        emit(
-          state.copyWith( 
-            cartProducts: productsCopy,
-            cartProductsLoading: false,
-          )
-        );
-      } else {
+
+      } else{
+
+        await _cartRepository.addProductToCart(event.cartProduct);
         emit(
           state.copyWith(
             cartProducts: [...state.cartProducts, event.cartProduct],
           )
         );
+
       }
   }
 }

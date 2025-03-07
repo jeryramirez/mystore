@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:my_store/features/product/core/entities/product.dart';
+import 'package:my_store/features/product/app/model/product_model.dart';
 import 'package:my_store/features/product/framework/ui/widget/card_button.dart';
 import 'package:my_store/features/product/framework/ui/widget/card_title.dart';
 import 'package:my_store/features/product/framework/ui/widget/card_price.dart';
@@ -12,7 +12,7 @@ class ProductCard extends StatelessWidget {
     super.key
   });
 
-  final Product product;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {

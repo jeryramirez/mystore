@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_store/features/product/app/use_cases/get_products.dart';
+import 'package:my_store/features/product/core/use_cases/get_products.dart';
 
 import 'package:my_store/features/product/framework/bloc/product_event.dart';
 import 'package:my_store/features/product/framework/bloc/product_state.dart';

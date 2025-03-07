@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:my_store/features/product/core/entities/product.dart';
+import 'package:my_store/features/product/app/model/product_model.dart';
 
 final class CartState extends Equatable {
   const CartState({
@@ -7,7 +7,7 @@ final class CartState extends Equatable {
     this.cartProductsLoading = false,
   });
 
-  final List<Product> cartProducts;
+  final List<ProductModel> cartProducts;
   final bool cartProductsLoading;
 
 
@@ -15,7 +15,7 @@ final class CartState extends Equatable {
   List<Object?> get props => [cartProducts];
 
   CartState copyWith({
-    List<Product>? cartProducts,
+    List<ProductModel>? cartProducts,
     bool? cartProductsLoading,
 
   }) {
