@@ -17,6 +17,8 @@ class ProductModel {
     required this.total,
     required this.quantity,
   });
+  
+  double get totalPrice => (price * quantity);
 
   ProductModel copyWith({
     String? id,
